@@ -71,7 +71,7 @@ public class PrefixEvaluation {
         System.out.println("Result: " + result);
     }
 }
-
+```
 Output
 
 ![image](https://github.com/user-attachments/assets/98c230d3-2e9c-4157-ad37-40519e5219cd)
