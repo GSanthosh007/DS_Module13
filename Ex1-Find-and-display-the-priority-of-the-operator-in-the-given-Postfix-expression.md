@@ -1,73 +1,67 @@
-# EX 1 Display operator precedence in the infix expression.
+## EX 1 Display Operator Precedence in the Postfix Expression
 ## AIM:
-To write a C program to find and display the priority of the operator in the given Postfix expression
+To write a Java program to find and display the priority of operators in the given postfix expression.
 
 ## Algorithm
-```
 1. Start the program.
-2.Define the priority() function to return the priority of operators.
-3.Initialize the string containing operators and operands.
-4.Loop through each character in the string.
-5.For each operator, call the priority() function to determine its priority.
-6.Print the operator and its corresponding priority level.
-7.End.
- ``` 
+2. Define a function priority() that returns the precedence value of operators.
+3. Initialize the postfix expression as a string.
+4. Traverse the expression character by character.
+5. For each operator, call priority() to get its precedence.
+6. Display the operator along with its precedence level.
+7. End.
 
-## Program:
+## Program :
 ```
 /*
 Program to find and display the priority of the operator in the given Postfix expression
 Developed by: Santhosh G
-RegisterNumber:  212223240152
+RegisterNumber: 212223240152
 */
-#include <stdio.h>
-#include<string.h>
-int function(char y)
-{
-    switch(y)
-    {
-        case '+':
-        return 2;
-        case '/':
-        return 3;
-        case '*':
-        return 3;
-        case '|':
-        return 1;
-        default:
-        return -1;
-        
+
+public class OperatorPriority {
+
+    public static int priority(char op) {
+        switch (op) {
+            case '+':
+                return 2;
+            case '/':
+            case '*':
+                return 3;
+            case '|':
+                return 1;
+            default:
+                return -1;
+        }
     }
-    
-}
-int main()
-{
-    char expression[]="100 200 + 2 / 5 * 7|";
-    char *x = expression;
-    while(*x!=0)
-    {
-        if(*x=='+' || *x=='/'|| *x=='*'||*x=='|')
-        {
-            int pr = function(*x);
-            printf("%c  ----> ",*x);
-            switch(pr)
-            {
-                case 1:
-                printf("Lowest Priority\n");
-                break;
-                case 2:
-                printf("Second Lowest Priority\n");
-                break;
-                case 3:
-                printf("Second Highest Priority\n");
-                break;
-                case 4:
-                printf("Second Highest Priority\n");
+
+    public static void main(String[] args) {
+
+        String expression = "100 200 + 2 / 5 * 7|";
+
+        for (int i = 0; i < expression.length(); i++) {
+            char ch = expression.charAt(i);
+
+            if (ch == '+' || ch == '/' || ch == '*' || ch == '|') {
+                int pr = priority(ch);
+                System.out.print(ch + " ----> ");
+
+                switch (pr) {
+                    case 1:
+                        System.out.println("Lowest Priority");
+                        break;
+                    case 2:
+                        System.out.println("Second Lowest Priority");
+                        break;
+                    case 3:
+                        System.out.println("Second Highest Priority");
+                        break;
+                    default:
+                        System.out.println("Unknown Priority");
+                }
             }
         }
-        x++;
     }
-    return 0;
 }
 ```
 
@@ -77,4 +71,4 @@ int main()
 
 
 ## Result:
-Thus the C program to find and display the priority of the operator in the given Postfix expression is implemented successfully
+Thus, the Java program to find and display the priority of operators in the given postfix expression is successfully implemented.
