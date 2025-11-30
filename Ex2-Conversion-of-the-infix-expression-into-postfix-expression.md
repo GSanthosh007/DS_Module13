@@ -1,92 +1,83 @@
-# Ex2 Conversion of the infix expression into postfix expression
+## Ex2 Conversion of the Infix Expression into Postfix Expression
 ## AIM:
-To write a C program to convert the infix expression into postfix form using stack by following the operator precedence and associative rule.
+To write a Java program to convert the infix expression into postfix form using a stack by following operator precedence and associativity rules.
 
 ## Algorithm
-```
 1. Start the program.
-2.Initialize a stack and set the top index to -1.
-3.Define the push() and pop() functions to add and remove elements from the stack.
-4.Define the priority() function to assign priorities to operators.
-5.Traverse the expression in the IntoPost() function, handling operands, parentheses, and operators.
-6.After processing the expression, pop and print any remaining operators from the stack.
-7.End.
-  ```
+2. Initialize a stack for operators.
+3. Define a function priority() to assign precedence values to operators.
+4. Traverse each character in the infix expression:
+   a. If it is an operand, print it.
+   b. If it is '(', push it onto the stack.
+   c. If it is ')', pop and print until '(' is encountered.
+   d. If it is an operator:
+       - Pop and print operators from stack having higher or equal priority.
+       - Push current operator onto stack.
+5. After processing the entire expression, pop and print all remaining operators.
+6. End.
 
 ## Program:
 ```
 /*
 Program to convert the infix expression into postfix expression
 Developed by: Santhosh G
-RegisterNumber:  212223240152
+RegisterNumber: 212223240152
 */
-#include<stdio.h>
-#include<ctype.h>
 
-char stack[100];
-int top = -1;
+import java.util.Stack;
 
-void push(char x)
-{
-   top++;
-   stack[top]=x;
-}
+public class InfixToPostfix {
 
-char pop()
-{
-     return stack[top--];
-}
-int priority(char x)
-{
-    if(x==')')
-    return 0;
-    if(x=='&'||x=='|')
-    return 1;
-    if(x=='+'||x=='-')
-    return 2;
-    if(x=='*'||x=='/'||x=='%')
-    return 3;
-    if(x=='^')
-    return 4;
-    return 0;
-}
-char IntoPost(char *exp)
-{
-    char *symbol,x;
-    symbol=exp;
-    while(*symbol!='\0')
-    {
-        if(isalnum(*symbol))
-        
-        printf("%c ",*symbol);
-        
-        else if(*symbol=='(')
-        
-        push(*symbol);
-        else if(*symbol==')')
-        {
-            while((x=pop())!='(')
-            printf("%c ",x);
+    public static int priority(char x) {
+        switch (x) {
+            case ')': return 0;
+            case '&':
+            case '|': return 1;
+            case '+':
+            case '-': return 2;
+            case '*':
+            case '/':
+            case '%': return 3;
+            case '^': return 4;
+            default: return 0;
         }
-        else
-        {
-            while(priority(stack[top])>=priority(*symbol))
-            printf("%c ",pop());
-            push(*symbol);
-        }
-        symbol++;   
-}
-while(top != -1)
-    {
-       printf("%c ",pop());
     }
-    return 0;
-}
-int main()
-{
-    char exp[100]="2*3%(2-1)+5|3";
-    IntoPost(exp);
-    return 1;
+
+    public static void infixToPostfix(String exp) {
+        Stack<Character> stack = new Stack<>();
+
+        for (int i = 0; i < exp.length(); i++) {
+            char ch = exp.charAt(i);
+
+            if (Character.isLetterOrDigit(ch)) {
+                System.out.print(ch + " ");
+            }
+            else if (ch == '(') {
+                stack.push(ch);
+            }
+            else if (ch == ')') {
+                while (!stack.isEmpty() && stack.peek() != '(') {
+                    System.out.print(stack.pop() + " ");
+                }
+                stack.pop();
+            }
+            else {
+                while (!stack.isEmpty() && priority(stack.peek()) >= priority(ch)) {
+                    System.out.print(stack.pop() + " ");
+                }
+                stack.push(ch);
+            }
+        }
+
+        while (!stack.isEmpty()) {
+            System.out.print(stack.pop() + " ");
+        }
+    }
+
+    public static void main(String[] args) {
+        String exp = "2*3%(2-1)+5|3";
+        infixToPostfix(exp);
+    }
 }
 ```
 
@@ -96,4 +87,4 @@ int main()
 
 
 ## Result:
-Thus, the C program to convert the infix expression into postfix form using stack by following the operator precedence and associative rule is implemented successfully.
+Thus, the Java program to convert the infix expression into postfix form using stack and operator precedence has been successfully implemented.
