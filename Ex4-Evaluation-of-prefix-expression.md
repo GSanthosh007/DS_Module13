@@ -1,80 +1,81 @@
-# Ex4 Evaluation of prefix expression
-## AIM:
-To write a C function to evaluate the given prefix expression using stack and print the output of the given prefix expression from the stack inside the function . 
+Ex4 Evaluation of Prefix Expression
+AIM
 
-## Algorithm
-```
+To write a Java program to evaluate the given prefix expression using a stack and print the result.
+
+Algorithm
 1. Start
-2.Initialize an empty stack s with a variable top for tracking the stack index.
-3.Define a push() function to add an element to the stack.
-4.Define a pop() function to remove and return the top element from the stack.
-5.In evalprefix(), loop through the given prefix expression from right to left.
-6.For each character, if it’s an operator (+, *), pop two operands from the stack, perform the operation, and push the result.
-7.If it's a digit, convert it to an integer and push it onto the stack; finally, print the result after the loop ends.
-8.End
+2. Initialize an empty integer stack.
+3. Read the prefix expression as a string.
+4. Traverse the expression from right to left.
+5. For each character:
+      - If it is a digit, convert it to an integer and push it on the stack.
+      - If it is an operator, pop two operands from the stack,
+        perform the operation, and push the result back.
+6. After traversal, the final value on the stack is the result.
+7. Print the result.
+8. End
 
-```  
-
-## Program:
+Program:
 ```
 /*
 Program to evaluate the given prefix expression
 Developed by: Santhosh G
-RegisterNumber:  212223240152
+Register Number: 212223240152
 */
-#include <stdio.h>
-#include <ctype.h>
-#include <string.h>
 
-int stack[20];
-int top = -1;
+import java.util.Stack;
 
-void push(int x) {
-    stack[++top] = x;
-}
+public class PrefixEvaluation {
 
-int pop() {
-    return stack[top--];
-}
+    public static int evaluatePrefix(String expr) {
+        Stack<Integer> stack = new Stack<>();
 
-void evalprefix(char *symbol) {
-    int num, n1, n2, n3;
-    int len = strlen(symbol);
+        // Traverse from right to left
+        for (int i = expr.length() - 1; i >= 0; i--) {
+            char ch = expr.charAt(i);
 
+            // If digit, push to stack
+            if (Character.isDigit(ch)) {
+                stack.push(ch - '0');
+            } else {
+                // Operator: pop two operands
+                int n1 = stack.pop();
+                int n2 = stack.pop();
+                int result = 0;
 
-    for (int i = len - 1; i >= 0; i--) {
-        if (isdigit(symbol[i])) {
-            num = symbol[i] - 48; 
-            push(num);
-        } else {
-            n1 = pop();
-            n2 = pop();
-
-            switch (symbol[i]) {
-                case '+':
-                    n3 = n2 + n1;
-                    break;
-                case '-':
-                    n3 = n1 - n2;
-                    break;
-                case '*':
-                    n3 = n1 * n2;
-                    break;
-                case '/':
-                    n3 = n1 / n2;
-                    break;
+                switch (ch) {
+                    case '+':
+                        result = n1 + n2;
+                        break;
+                    case '-':
+                        result = n1 - n2;
+                        break;
+                    case '*':
+                        result = n1 * n2;
+                        break;
+                    case '/':
+                        result = n1 / n2;
+                        break;
+                }
+                stack.push(result);
             }
-            push(n3);
         }
-    }
-    printf("%d\n", pop()); 
-}
-```
 
-## Output:
+        return stack.pop();
+    }
+
+    public static void main(String[] args) {
+        String prefix = "+9*26"; // Example prefix expression
+        int result = evaluatePrefix(prefix);
+        System.out.println("Result: " + result);
+    }
+}
+
+Output
 
 ![image](https://github.com/user-attachments/assets/98c230d3-2e9c-4157-ad37-40519e5219cd)
 
+Result
 
-## Result:
-Thus, the C program to evaluate the prefix expression using stack and print the output of the given prefix expression from the stack inside the function is implemented successfully.
+Thus, the Java program to evaluate the prefix expression using a stack is executed successfully.
