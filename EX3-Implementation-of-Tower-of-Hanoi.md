@@ -1,40 +1,57 @@
-# EX3 Implementation of Tower of Hanoi
+## EX3 Implementation of Tower of Hanoi
 ## AIM:
-To write a C program to implement Tower of Hanoi
+To write a Java program to implement the Tower of Hanoi using recursion.
 
-## Algorithm
-1. Start the program.
-2. Define the priority() function to return the priority of operators.
-3. Initialize the string containing operators and operands.
-4. Loop through each character in the string.
-5. For each operator, call the priority() function to determine its priority.
-6. Print the operator and its corresponding priority level.
-7.End
+## Algorithm:
+```
+Start the program.
+Read the number of disks.
+Define a recursive function toh(n, source, destination, auxiliary)
+If n == 1, print the move and return.
+Recursively move n-1 disks from source → auxiliary using destination.
+Move the nth disk from source → destination.
+Recursively move n-1 disks from auxiliary → destination using source.
+Call the recursive function.
+End the program.
+```
 
 ## Program:
 ```
-/*
 Program to implement Tower of Hanoi
 Developed by: Santhosh G
-RegisterNumber:  212223240152
-*/
-#include <stdio.h>
+RegisterNumber: 212223240152
 
-void TOH(int n, char source, char dest, char aux) {
-    if (n == 1) {
-        printf("%c to %c\n", source, dest);
-        return;
+
+import java.util.Scanner;
+
+public class TowerOfHanoi {
+
+    public static void toh(int n, char source, char dest, char aux) {
+        if (n == 1) {
+            System.out.println(source + " to " + dest);
+            return;
+        }
+        toh(n - 1, source, aux, dest);
+        System.out.println(source + " to " + dest);
+        toh(n - 1, aux, dest, source);
     }
-    TOH(n - 1, source, aux, dest);
-    printf("%c to %c\n", source, dest);
-    TOH(n - 1, aux, dest, source);
+
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.print("Enter number of disks: ");
+        int n = sc.nextInt();
+
+        System.out.println("The moves involved are:");
+        toh(n, 'A', 'C', 'B');  // A = source, C = destination, B = auxiliary
+
+        sc.close();
+    }
 }
 ```
 
 ## Output:
 ![image](https://github.com/user-attachments/assets/43f8950e-3ddf-4b3f-9736-cbdf804d7abc)
 
-
-
 ## Result:
-Thus, the C program to implement Tower of Hanoi using recursion is implemented successfully.
+Thus, the Java program to implement the Tower of Hanoi using recursion has been successfully executed.
